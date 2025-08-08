@@ -1,0 +1,36 @@
+name: Deploy to Google Sheets Apps Script
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install clasp
+        run: npm install -g @google/clasp
+
+      - name: Authenticate clasp
+        run: |
+          echo '{
+            "token": {
+              "client_id": "${{ secrets.CLASP_CLIENT_ID }}",
+              "client_secret": "${{ secrets.CLASP_CLIENT_SECRET }}",
+              "refresh_token": "${{ secrets.CLASP_REFRESH_TOKEN }}",
+              "scope": "https://www.googleapis.com/auth/script.projects https://www.googleapis.com/auth/script.external_request https://www.googleapis.com/auth/spreadsheets",
+              "token_type": "Bearer"
+            }
+          }' > ~/.clasprc.json
+
+      - name: Push to Google Apps Script
+        run: clasp push --force
