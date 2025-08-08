@@ -9,4 +9,5 @@ function onOpen() {
 
 function onInstall() {
   onOpen();
+  ensurePlayersSheetExists();
 }
