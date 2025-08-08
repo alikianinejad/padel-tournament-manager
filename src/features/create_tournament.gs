@@ -1,5 +1,5 @@
 function showTournamentDialog() {
-  const html = HtmlService.createHtmlOutputFromFile('tournament_dialog')
+  const html = HtmlService.createHtmlOutputFromFile('dialogs/tournament_dialog')
     .setWidth(400)
     .setHeight(500);
   SpreadsheetApp.getUi().showModalDialog(html, 'Create Padel Tournament');
