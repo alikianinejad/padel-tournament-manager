@@ -112,6 +112,7 @@ function calculateAllPlayerStats() {
   return playerTotals;
 }
 
+// eslint-disable-next-line no-unused-vars
 function createStatisticsSheet() {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   let statsSheet = ss.getSheetByName('Player_Statistics');

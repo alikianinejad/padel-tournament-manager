@@ -5,6 +5,7 @@ function showPlayerDialog() {
   SpreadsheetApp.getUi().showModalDialog(html, 'Add New Player');
 }
 
+// eslint-disable-next-line no-unused-vars
 function ensurePlayersSheetExists() {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   const sheetName = 'Players';

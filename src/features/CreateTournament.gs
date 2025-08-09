@@ -63,6 +63,7 @@ const schedule12Player3Court = [
   ],
 ];
 
+// eslint-disable-next-line no-unused-vars
 function createTournament(players, tournamentType) {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   const timestamp = new Date().toISOString().slice(0, 10);
@@ -110,7 +111,6 @@ function generateRounds4Players(players) {
 
 function generateRounds8Players(players) {
   const rounds = [];
-  const totalRounds = 7; // Standard for 8 players
 
   // Americano algorithm for 8 players, 2 courts
   const schedule = [
@@ -168,86 +168,6 @@ function generateRounds12Players(players) {
   });
 
   return rounds;
-}
-
-function testAmericanoSchedule12Playes3Counrt() {
-  const result = examinateAmericanoSchedule(schedule12Player3Court);
-  console.log(result);
-}
-
-function examinateAmericanoSchedule(schedule) {
-  // Fixed Americano algorithm for 12 players, 3 courts
-
-  // Validate the schedule
-  const partnerships = new Map();
-  const duplicates = [];
-
-  for (let roundIndex = 0; roundIndex < schedule.length; roundIndex++) {
-    const round = schedule[roundIndex];
-
-    for (let courtIndex = 0; courtIndex < round.length; courtIndex++) {
-      const match = round[courtIndex];
-
-      // Check team 1 (players 0,1 of match)
-      const team1Key = [match[0], match[1]].sort().join('-');
-      // Check team 2 (players 2,3 of match)
-      const team2Key = [match[2], match[3]].sort().join('-');
-
-      // Check for duplicates
-      if (partnerships.has(team1Key)) {
-        const previousLocation = partnerships.get(team1Key);
-        duplicates.push(
-          `DUPLICATE: Team ${team1Key} appears in ${previousLocation} and Round ${roundIndex + 1}, Court ${courtIndex + 1}`
-        );
-      } else {
-        partnerships.set(team1Key, `Round ${roundIndex + 1}, Court ${courtIndex + 1}`);
-      }
-
-      if (partnerships.has(team2Key)) {
-        const previousLocation = partnerships.get(team2Key);
-        duplicates.push(
-          `DUPLICATE: Team ${team2Key} appears in ${previousLocation} and Round ${roundIndex + 1}, Court ${courtIndex + 1}`
-        );
-      } else {
-        partnerships.set(team2Key, `Round ${roundIndex + 1}, Court ${courtIndex + 1}`);
-      }
-    }
-  }
-
-  // Log results
-  console.log('=== AMERICANO SCHEDULE VALIDATION ===');
-  console.log(`Total unique partnerships found: ${partnerships.size}`);
-  console.log(`Expected partnerships for 12 players: 66`); // C(12,2) = 66
-  console.log('');
-
-  if (duplicates.length > 0) {
-    console.log('❌ DUPLICATE PARTNERSHIPS FOUND:');
-    duplicates.forEach((duplicate) => console.log(duplicate));
-  } else {
-    console.log('✅ SUCCESS: All partnerships are unique!');
-  }
-
-  console.log('');
-  console.log('=== DETAILED SCHEDULE ===');
-
-  // Display schedule
-  for (let i = 0; i < schedule.length; i++) {
-    console.log(`Round ${i + 1}:`);
-    for (let j = 0; j < schedule[i].length; j++) {
-      const match = schedule[i][j];
-      console.log(`  Court ${j + 1}: Players ${match[0]},${match[1]} vs ${match[2]},${match[3]}`);
-    }
-    console.log('');
-  }
-
-  // Return summary
-  return {
-    isValid: duplicates.length === 0,
-    totalPartnerships: partnerships.size,
-    expectedPartnerships: 66,
-    duplicatesFound: duplicates.length,
-    duplicates: duplicates,
-  };
 }
 
 function calculateRecommendedScore(totalRounds) {
@@ -458,10 +378,6 @@ function calculatePlayerStats(playerName) {
   return stats;
 }
 
-function calculatePlayerScore(playerName) {
-  return calculatePlayerStats(playerName).totalScores;
-}
-
 function updateLeaderboard() {
   const sheet = SpreadsheetApp.getActiveSheet();
   const data = sheet.getDataRange().getValues();
@@ -533,7 +449,6 @@ function updateLeaderboard() {
 
 // Function to automatically update leaderboard when scores change
 function onEdit(e) {
-  const sheet = e.source.getActiveSheet();
   const range = e.range;
 
   // Check if the edit was in a score position (columns 2 or 4, and it's a number)
@@ -546,36 +461,4 @@ function onEdit(e) {
       updateLeaderboard();
     }
   }
-}
-
-// Manual function to recalculate all points
-function recalculateAllPoints() {
-  updateLeaderboard();
-  SpreadsheetApp.getUi().alert('Leaderboard updated successfully!');
-}
-
-// Utility functions for mobile optimization
-function optimizeForMobile() {
-  const ss = SpreadsheetApp.getActiveSpreadsheet();
-  const sheets = ss.getSheets();
-
-  sheets.forEach((sheet) => {
-    if (sheet.getName().startsWith('Tournament_')) {
-      // Set optimal column widths for mobile
-      sheet.setColumnWidth(1, 80); // Court/Round
-      sheet.setColumnWidth(2, 120); // Team 1
-      sheet.setColumnWidth(3, 30); // VS
-      sheet.setColumnWidth(4, 120); // Team 2
-      sheet.setColumnWidth(5, 50); // Score label
-      sheet.setColumnWidth(6, 40); // Score 1
-      sheet.setColumnWidth(7, 20); // Dash
-      sheet.setColumnWidth(8, 40); // Score 2
-
-      // Freeze header rows
-      sheet.setFrozenRows(3);
-
-      // Set text wrapping
-      sheet.getRange('A:H').setWrap(true);
-    }
-  });
 }

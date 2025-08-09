@@ -4,7 +4,6 @@ function onOpen() {
   createUiMenu();
 }
 
-// eslint-disable-next-line no-unused-vars
 function onInstall() {
   onOpen();
 }

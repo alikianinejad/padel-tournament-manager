@@ -21,7 +21,12 @@ export default [
     rules: {
       ...prettierConfig.rules,
       'prettier/prettier': 'error',
-      'no-unused-vars': 'warn',
+      'no-unused-vars': [
+        'error',
+        {
+          varsIgnorePattern: '^(onEdit|onOpen|onInstall|show[A-Z].*Dialog)$',
+        },
+      ],
       'no-console': 'off',
     },
   },
