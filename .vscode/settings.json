@@ -1,5 +1,10 @@
 {
   "files.associations": {
     "*.gs": "javascript"
+  },
+  "eslint.validate": ["javascript", "googleappsscript"],
+  "eslint.workingDirectories": ["./"],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "always"
   }
 }

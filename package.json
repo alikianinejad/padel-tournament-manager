@@ -1,0 +1,37 @@
+{
+  "name": "padel-tournament-manager",
+  "version": "1.0.0",
+  "description": "A Google Sheets add-on for organizing, scheduling, and tracking Padel Americano tournaments with automated leaderboards and player management.",
+  "scripts": {
+    "lint": "eslint . --ext .js,.gs",
+    "lint:fix": "eslint . --ext .js,.gs --fix",
+    "format": "prettier --write \"**/*.{js,gs}\"",
+    "format:check": "prettier --check \"**/*.{js,gs}\""
+  },
+  "lint-staged": {
+    "*.{js,gs}": [
+        "prettier --write",
+        "eslint --fix"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alikianinejad/padel-tournament-manager.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alikianinejad/padel-tournament-manager/issues"
+  },
+  "homepage": "https://github.com/alikianinejad/padel-tournament-manager#readme",
+  "devDependencies": {
+    "eslint": "^9.33.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-googleappsscript": "^1.0.5",
+    "eslint-plugin-prettier": "^5.5.4",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.5",
+    "prettier": "^3.6.2"
+  }
+}

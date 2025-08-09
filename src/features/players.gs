@@ -7,12 +7,11 @@ function showPlayerDialog() {
 
 function ensurePlayersSheetExists() {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
-  const sheetName = "Players";
+  const sheetName = 'Players';
   let sheet = ss.getSheetByName(sheetName);
   if (!sheet) {
     sheet = ss.insertSheet(sheetName);
     // Optionally, add headers
-    sheet.appendRow(["Name", "Ranking", "Contact"]);
+    sheet.appendRow(['Name', 'Ranking', 'Contact']);
   }
 }
-
